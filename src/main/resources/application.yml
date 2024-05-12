@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://ssabaza.mysql.database.azure.com:3306/ssadatabase?useSSL=true
+    username: baza1
+    password: P@ssw0rd
+    driver-class-name: "com.mysql.cj.jdbc.Driver"

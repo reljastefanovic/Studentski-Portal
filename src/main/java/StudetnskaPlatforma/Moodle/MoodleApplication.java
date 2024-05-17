@@ -16,4 +16,5 @@ public class MoodleApplication {
 		return args -> {
 			databaseConnectionTest.testConnection();
 		};
+
 	}}

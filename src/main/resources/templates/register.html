@@ -273,10 +273,14 @@ margin:auto;
     </style>
 </head>
 <body>
+<!-- Paste your HTML structure here -->
 <div class="form-structor">
     <div class="signup">
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <form th:action="@{/register}" method="post">
+            <div class="error-message" th:if="${param.error}">
+                <p style="color:white; text-align:center;  "> <b><i> Došlo je do greške prilikom registracije. Vaš username već postoji</i> </b></p>
+            </div>
             <div class="form-holder">
                 <input type="text" class="input" placeholder="username" name="username"/>
                 <input type="password" class="input" placeholder="password" name="password"/>
@@ -284,71 +288,67 @@ margin:auto;
             </div>
             <button class="submit-btn">Sign up</button>
         </form>
+        <!-- Dodajte ovde div za prikazivanje poruke o grešci -->
+
     </div>
     <div class="login slide-up">
         <div class="center">
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
-            <!-- Adjusted form with Thymeleaf attributes -->
             <form th:action="@{/login}" method="post">
                 <div class="form-holder">
-                    <input type="text" class="input" placeholder="Username" name="username"  required/>
-                    <input type="password" class="input" placeholder="Password" name="password"  required />
+                    <input type="text" class="input" placeholder="Username" name="username" />
+                    <input type="password" class="input" placeholder="Password" name="password" />
                 </div>
                 <button type="submit" class="submit-btn">Log in</button>
-                <div class="error-message" th:if="${param.error}">
-                    <p style="color:red; text-align:center;"> <i> Došlo je do greške prilikom registracije. Proverite unete podatke. </i></p>
-                </div>
             </form>
         </div>
     </div>
 </div>
 
-
+<!-- Paste your JavaScript code here -->
 <script>
-    console.clear();
+
 
     const loginBtn = document.getElementById('login');
-    const signupBtn = document.getElementById('signup');
+ const signupBtn = document.getElementById('signup');
 
-    // Function to simulate click event
-    function simulateClick(element) {
-        const event = new MouseEvent('click', {
-            bubbles: true,
-            cancelable: true,
-            view: window
-        });
-        element.dispatchEvent(event);
-    }
+ loginBtn.addEventListener('click', (e) => {
+     let parent = e.target.parentNode.parentNode;
+     Array.from(e.target.parentNode.parentNode.classList).find((element) => {
+         if(element !== "slide-up") {
+             parent.classList.add('slide-up')
+         }else{
+             signupBtn.parentNode.classList.add('slide-up')
+             parent.classList.remove('slide-up')
+         }
+     });
 
-    // Simulate click on login button when page loads
-    window.onload = function() {
-        simulateClick(loginBtn);
-    };
+     // Ukloni poruku o grešci ako postoji
+     removeErrorMessage();
+ });
 
-    loginBtn.addEventListener('click', (e) => {
-        let parent = e.target.parentNode.parentNode;
-        Array.from(e.target.parentNode.parentNode.classList).find((element) => {
-            if (element !== "slide-up") {
-                parent.classList.add('slide-up')
-            } else {
-                signupBtn.parentNode.classList.add('slide-up')
-                parent.classList.remove('slide-up')
-            }
-        });
-    });
+ signupBtn.addEventListener('click', (e) => {
+     let parent = e.target.parentNode;
+     Array.from(e.target.parentNode.classList).find((element) => {
+         if(element !== "slide-up") {
+             parent.classList.add('slide-up')
+         }else{
+             loginBtn.parentNode.parentNode.classList.add('slide-up')
+             parent.classList.remove('slide-up')
+         }
+     });
 
-    signupBtn.addEventListener('click', (e) => {
-        let parent = e.target.parentNode;
-        Array.from(e.target.parentNode.classList).find((element) => {
-            if (element !== "slide-up") {
-                parent.classList.add('slide-up')
-            } else {
-                loginBtn.parentNode.parentNode.classList.add('slide-up')
-                parent.classList.remove('slide-up')
-            }
-        });
-    });
+     // Ukloni poruku o grešci ako postoji
+     removeErrorMessage();
+ });
+
+ function removeErrorMessage() {
+     const errorMessage = document.querySelector('.error-message');
+     if (errorMessage) {
+         errorMessage.remove();
+     }
+ }
+
 </script>
-
 </body>
 </html>

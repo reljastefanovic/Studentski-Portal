@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        .border{
+            border: solid 10px;
+        }
+        .header{
+            margin-top: 2vh;
+        }
+        .main{
+            margin-top: 5vh;
+        }
+        .card-img-top {
+        height: 200px; /* Adjust the height as needed */
+        width: auto;
+        object-fit: cover; /* This ensures the image covers the entire area */
+    }
+         .card {
+        margin-bottom: 20px; /* Add spacing between cards */
+    }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Moodle</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Pocetna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Kursevi</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link me-2" aria-current="page" href="login.html">Log in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-2" href="register.html">Sign in</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container header border">
+    <div class="container header border">
+        <h1>Pregled Kurseva:</h1>
+        <div class="row justify-content-between main">
+            <div th:each="course, iterStat : ${courses}" class="col-4">
+                <div class="card">
+                    <img th:src="${course.image_url}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${course.name}"></h5>
+                        <a th:href="${course.subject_url}" class="card-text">
+                            <p>Saznajte više o kursu</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

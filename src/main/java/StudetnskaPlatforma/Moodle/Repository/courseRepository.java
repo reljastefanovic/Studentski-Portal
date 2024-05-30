@@ -14,5 +14,5 @@ import java.util.Optional;
 public interface courseRepository extends JpaRepository<Course, Integer> {
     @Query(value = "SELECT c.* FROM courses c JOIN user_courses uc ON c.id = uc.course_id JOIN users u ON uc.username = u.username WHERE u.username = :username", nativeQuery = true)
     List<Course> findCourseNamesByUsername(@Param("username") String username);
-
+    Course findByName(String name);
 }

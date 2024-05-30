@@ -24,11 +24,10 @@ public class CourseController {
         return "courses"; // This will resolve to courses.html
     }
 
-    @GetMapping("/courses/{name}")
-    public String getCourseByName(@PathVariable String name, Model model) {
-        // Construct the template name from the course name
-        String templateName = name.toLowerCase(); // Assuming your HTML files are all lowercase
-        model.addAttribute("courseName", name);
-        return templateName; // This will resolve to the corresponding HTML template
+    @GetMapping("/courses/{courseName}")
+    public String getCourseDetails(@PathVariable String courseName, Model model) {
+        Course course = courseService.findByName(courseName);
+        model.addAttribute("course", course);
+        return "testorino"; // This refers to course-details.html
     }
 }

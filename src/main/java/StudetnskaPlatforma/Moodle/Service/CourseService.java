@@ -31,5 +31,8 @@ public class CourseService {
         String username = getLoggedInUserDetails();
         return repo.findCourseNamesByUsername(username);
     }
+    public Course findByName(String name) {
+        return repo.findByName(name);
+    }
 
 }

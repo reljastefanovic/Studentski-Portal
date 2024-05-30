@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>File Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div th:each="file : ${files}" class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${file.fileName}">File Name</h5>
+                    <!-- Display a hyperlink for downloading the file -->
+                    <a th:href="@{'/file/' + ${file.id}}"   th:text=" ${file.fileName}">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

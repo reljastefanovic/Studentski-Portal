@@ -141,7 +141,7 @@
         <div class="col-2 border">
             <h2>Vaši upisani kursevi</h2>
             <ul th:each="courses : ${courses}">
-                <p th:text="${courses.name}"> </p>
+                <a th:href="@{/courses/{id}(id=${courses.name})}" th:text="${courses.name}"></a>
             </ul>
         </div>
 

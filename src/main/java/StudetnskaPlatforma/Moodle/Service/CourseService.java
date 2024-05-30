@@ -1,18 +1,20 @@
 package StudetnskaPlatforma.Moodle.Service;
 
 import StudetnskaPlatforma.Moodle.Entity.Course;
+import StudetnskaPlatforma.Moodle.Repository.enrolledRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import StudetnskaPlatforma.Moodle.Repository.courseRepository;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CourseService {
     @Autowired
     private courseRepository repo;
+    @Autowired
+    private enrolledRepository enrolledRepository;
 
     public List<Course> getAllCourses() {
         return repo.findAll();
@@ -31,6 +33,18 @@ public class CourseService {
         String username = getLoggedInUserDetails();
         return repo.findCourseNamesByUsername(username);
     }
+    public String getUsername() {
+        String username = getLoggedInUserDetails();
+        return username;
+    }
+
+    public void enrollUserToCourse(Long courseId) {
+        String username = getUsername(); // Dobijanje korisničkog imena iz funkcije
+        enrolledRepository.enrollUserToCourse(username, courseId); // Prosleđivanje korisničkog imena i ID kursa
+    }
+
+
+
     public Course findByName(String name) {
         return repo.findByName(name);
     }

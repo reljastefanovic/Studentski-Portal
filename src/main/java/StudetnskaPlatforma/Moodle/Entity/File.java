@@ -3,50 +3,44 @@ package StudetnskaPlatforma.Moodle.Entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "file_entity")
+@Table(name = "courses_data")
 public class File {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "course_id")
+    private Long course_id;
 
-    private Long id;
+    @Column(name = "file_name", nullable = false)
     private String fileName;
-    private String fileType;
+
     @Lob
+    @Column(name = "file_data")
     private byte[] data;
 
-    public File(Long id, String fileName, String fileType, byte[] data) {
-        this.id = id;
+    public File(Long course_id, String fileName, byte[] data) {
+        this.course_id = course_id;
         this.fileName = fileName;
-        this.fileType = fileType;
         this.data = data;
     }
 
     public Long getId() {
-        return id;
+        return course_id;
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public String getFileType() {
-        return fileType;
-    }
 
     public byte[] getData() {
         return data;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long course_id) {
+        this.course_id = course_id;
     }
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
     }
 
     public void setData(byte[] data) {

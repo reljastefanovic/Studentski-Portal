@@ -15,15 +15,15 @@ public class FileService {
     @Autowired
     private fileRepository fileRepository;
 
-    public File storeFile(MultipartFile file) throws IOException {
+    public File storeFile(MultipartFile file, Long courseId) throws IOException {
         String fileName = file.getOriginalFilename();
         File fileEntity = new File();
         fileEntity.setFileName(fileName);
-        fileEntity.setFileType(file.getContentType());
         fileEntity.setData(file.getBytes());
-
-        return fileRepository.save(fileEntity);
+        fileRepository.saveFile(fileName, file.getBytes(), courseId); // Call custom SQL query
+        return fileEntity;
     }
+
 
     public File getFile(Long id) {
         return fileRepository.findById(id).orElseThrow(() -> new RuntimeException("File not found with id " + id));

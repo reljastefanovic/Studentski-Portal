@@ -7,6 +7,7 @@
 <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
     <input type="file" name="file"/>
     <button type="submit">Upload</button>
+    <input type="hidden" name="file" value="course.id"/>
 </form>
 </body>
 </html>

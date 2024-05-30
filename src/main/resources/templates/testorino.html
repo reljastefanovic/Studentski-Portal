@@ -1,15 +1,184 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Course Details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        .border{
+            border: solid 10px;
+        }
+        .header{
+            margin-top: 2vh;
+        }
+        .main{
+            margin-top: 5vh;
+        }
+        .projcard-container {
+	margin: 50px 0;
+}
+.projcard-container,
+.projcard-container * {
+	box-sizing: border-box;
+}
+.projcard-container {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+}
+.projcard {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	margin-bottom: 40px;
+	border-radius: 10px;
+	background-color: #fff;
+	border: 2px solid #ddd;
+	font-size: 18px;
+	overflow: hidden;
+	cursor: pointer;
+	box-shadow: 0 4px 21px -12px rgba(0, 0, 0, .66);
+
+}
+
+.projcard-innerbox {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.projcard-img {
+	position: absolute;
+	height: 300px;
+	width: 400px;
+	top: 0;
+	left: 0;
+}
+.projcard-textbox {
+	position: absolute;
+	top: 7%;
+	bottom: 7%;
+	left: 430px;
+	width: calc(100% - 470px);
+	font-size: 17px;
+}
+.projcard-textbox * {
+	position: relative;
+}
+.projcard-title {
+	font-family: 'Voces', 'Open Sans', arial, sans-serif;
+	font-size: 24px;
+}
+
+.projcard-bar {
+	left: -2px;
+	width: 50px;
+	height: 5px;
+	margin: 10px 0;
+	border-radius: 5px;
+	background-color: #424242;
+
+}
+
+.projcard-description {
+	z-index: 10;
+	font-size: 15px;
+	color: #424242;
+	height: 125px;
+	text-align:justify;
+}
+
+
+
+    </style>
 </head>
 <body>
-<h1 th:text="${course.name}"></h1>
-<!-- Add more fields as needed -->
-<div>
-    <p>ID: <span th:text="${course.id}"></span></p>
 
-    <!-- Display other course details here -->
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Moodle</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Pocetna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8080/courses">Kursevi</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link me-2" aria-current="page" href="login">Log in</a>
+                </li>
+                <form id="logoutForm" action="/logout" method="post">
+                    <button type="submit" class="nav-link me-2" aria-current="page" >Log Out</button>
+                </form>
+
+                <li class="nav-item">
+                    <a class="nav-link me-2" href="register">Sign in</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container-fluid header">
+    <div class="row justify-content-around">
+        <div class="col border">
+            <h1 th:text="${course.name}"></h1>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+        </div>
+    </div>
+
+    <div class="row justify-content-around main">
+        <div class="col-2 border">
+            <h2>Vaši upisani kursevi</h2>
+            <li th:each="course : ${courses}">
+                <a th:href="@{/courses/{id}(id=${course.name})}" th:text="${course.name}"></a>
+            </li>
+        </div>
+
+        <div class="col-7 border">
+            <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+                <input type="file" name="file"/>
+                <button type="submit">Upload</button>
+                <input type="hidden" name="courseId" th:value="${course.id}" >
+
+            </form>
+            <h1>Sadržaj:</h1>
+            <div class="projcard-container">
+
+                <ul th:each="file : ${files}" >
+
+                            <!-- Display a hyperlink for downloading the file -->
+                            <a th:href="@{'/file/' + ${file.id}}"   th:text=" ${file.fileName}"></a>
+                </ul>
+
+            </div>
+
+
+        </div>
+        <div class="col-2 border">
+            <h1>Upisani na kurs</h1>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+        </div>
+    </div>
+
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

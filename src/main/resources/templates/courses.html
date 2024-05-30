@@ -65,11 +65,21 @@
                     <img th:src="${course.image_url}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${course.name}"></h5>
-                        <a th:href="${course.subject_url}" class="card-text">
-                            <p>Saznajte više o kursu</p>
-                        </a>
+                        <form action="/enroll" method="post">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a th:href="${course.subject_url}" class="card-text">
+                                    <p>Saznajte više o kursu</p>
+                                </a>
+                                <input type="hidden" name="courseId" th:value="${course.id}" >
+                                <button type="submit" class="btn btn-success">Upiši se</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+
+            </div>
+
+
             </div>
         </div>
     </div>

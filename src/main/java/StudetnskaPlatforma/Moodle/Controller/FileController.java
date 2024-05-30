@@ -27,33 +27,13 @@ public class FileController {
     private fileRepository fileRepository;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("courseId") Long courseId) {
         try {
-            File fileEntity = fileService.storeFile(file);
+            File fileEntity = fileService.storeFile(file,courseId);
             return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully: " + fileEntity.getFileName());
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
         }
-    }
-    @GetMapping("/asd")
-    public String upload()
-    {
-        return "upload";
-    }
-    @GetMapping("/dsa")
-    public String getAllFiles(Model model) {
-        List<File> files = fileService.getAllFiles();
-        model.addAttribute("files", files);
-        return "testupload";
-    }
-    @GetMapping("/file/{id}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) {
-        File fileEntity = fileService.getFile(id);
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(fileEntity.getFileType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getFileName() + "\"")
-                .body(fileEntity.getData());
     }
 
 

@@ -2,6 +2,7 @@ package StudetnskaPlatforma.Moodle.Controller;
 
 import StudetnskaPlatforma.Moodle.Entity.Course;
 import StudetnskaPlatforma.Moodle.Entity.File;
+import StudetnskaPlatforma.Moodle.Entity.Users;
 import StudetnskaPlatforma.Moodle.Service.CourseService;
 import StudetnskaPlatforma.Moodle.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +45,32 @@ public class CourseController {
 
 
     @GetMapping("/courses/{courseName}")
-    public String getCourseDetails(@PathVariable String courseName, Model model) {
+    public String getCourseDetails(@PathVariable String courseName, @RequestParam(required = false) String continueUrl, Model model) {
+        // Retrieve the course details
         Course course = courseService.findByName(courseName);
         model.addAttribute("course", course);
+
 
         List<Course> courses = courseService.getCourseNamesForLoggedInUser();
         model.addAttribute("courses", courses);
 
 
+        System.out.println("Value of courseName: " + courseName);
+
+
+
+            List<String> students = courseService.findStudentsByCourseName(courseName);
+            model.addAttribute("students", students);
+
+
+        // Retrieve all files
         List<File> files = fileService.getAllFiles();
         model.addAttribute("files", files);
-        return "testorino"; // This refers to course-details.html
+
+
+        return "testorino";
     }
+
+
+
 }

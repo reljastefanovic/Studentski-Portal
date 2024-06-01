@@ -15,12 +15,12 @@ public class FileService {
     @Autowired
     private fileRepository fileRepository;
 
-    public File storeFile(MultipartFile file, Long courseId) throws IOException {
+    public File storeFile(MultipartFile file, Long courseId, String courseName) throws IOException {
         String fileName = file.getOriginalFilename();
         File fileEntity = new File();
         fileEntity.setFileName(fileName);
         fileEntity.setData(file.getBytes());
-        fileRepository.saveFile(fileName, file.getBytes(), courseId); // Call custom SQL query
+        fileRepository.saveFile(fileName, file.getBytes(), courseId,courseName); // Call custom SQL query
         return fileEntity;
     }
 
@@ -30,5 +30,8 @@ public class FileService {
     }
     public List<File> getAllFiles() {
         return fileRepository.findAll();
+    }
+    public List<File> getCourseFiled(String courseName) {
+        return fileRepository.coursefiles(courseName);
     }
 }

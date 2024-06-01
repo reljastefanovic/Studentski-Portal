@@ -11,6 +11,8 @@ public class File {
 
     @Column(name = "file_name", nullable = false)
     private String fileName;
+    @Column(name = "course_name", nullable = false)
+    private String courseName;
 
     @Lob
     @Column(name = "file_data")
@@ -20,6 +22,21 @@ public class File {
         this.course_id = course_id;
         this.fileName = fileName;
         this.data = data;
+    }
+
+    public File(Long course_id, String fileName, String courseName, byte[] data) {
+        this.course_id = course_id;
+        this.fileName = fileName;
+        this.courseName = courseName;
+        this.data = data;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Long getId() {

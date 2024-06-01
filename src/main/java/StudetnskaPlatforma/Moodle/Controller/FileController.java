@@ -27,9 +27,9 @@ public class FileController {
     private fileRepository fileRepository;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("courseId") Long courseId) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("courseId") Long courseId,@RequestParam("courseName") String courseName) {
         try {
-            File fileEntity = fileService.storeFile(file,courseId);
+            File fileEntity = fileService.storeFile(file,courseId,courseName);
             return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully: " + fileEntity.getFileName());
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());

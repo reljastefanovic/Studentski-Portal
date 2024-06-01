@@ -36,7 +36,10 @@ public class Configurations {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth->auth
                         .requestMatchers("/","/user/save","/register","register2").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/post").hasAuthority("ADMIN")
+                        .anyRequest().authenticated()
+                        )
+
                 .httpBasic(withDefaults())
                 .formLogin(form -> form
                         .loginPage("/login")
@@ -49,6 +52,8 @@ public class Configurations {
                         .logoutSuccessUrl("/login"))
 
                 .csrf(AbstractHttpConfigurer::disable);
+
+
         ;
         return http.build();
     }

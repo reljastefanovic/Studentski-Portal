@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -146,18 +147,17 @@
         </div>
 
         <div class="col-7 border">
-            <form method="POST" enctype="multipart/form-data" th:action="@{/upload}">
+            <form method="POST" enctype="multipart/form-data" th:action="@{/upload}" sec:authorize="hasAuthority('ADMIN')">
                 <input type="file" name="file"/>
                 <button type="submit">Upload</button>
                 <input type="hidden" name="courseId" th:value="${course.id}" >
-
             </form>
             <h1>Sadržaj:</h1>
             <div class="projcard-container">
 
                 <ul th:each="file : ${files}" >
 
-                            <!-- Display a hyperlink for downloading the file -->
+
                             <a th:href="@{'/file/' + ${file.id}}"   th:text=" ${file.fileName}"></a>
                 </ul>
 
@@ -166,12 +166,11 @@
 
         </div>
         <div class="col-2 border">
-            <h1>Upisani na kurs</h1>
-            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
-            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
-            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
-            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
-            <p>mjaumjaumjaumjaumjaumjaumjaumjaumjaumjaumjau</p>
+            <h1>Students Enrolled:</h1>
+            <ul th:if="${students != null}" th:each="student : ${students}">
+                <li th:text="${student}"></li>
+            </ul>
+
         </div>
     </div>
 

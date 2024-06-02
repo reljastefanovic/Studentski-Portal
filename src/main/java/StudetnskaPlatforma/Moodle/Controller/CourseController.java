@@ -33,6 +33,12 @@ public class CourseController {
         model.addAttribute("courses", courses);
         return "courses"; // This will resolve to courses.html
     }
+    @GetMapping("/statistika")
+    public String Statistika(Model model) {
+        List<Course> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
+        return "statistika"; // This will resolve to courses.html
+    }
     @PostMapping("/enroll")
     public ResponseEntity<String> enrollUserToCourse(@RequestParam("courseId") Long courseId) {
         try {
@@ -56,7 +62,7 @@ public class CourseController {
 
 
         System.out.println("Value of courseName: " + courseName);
-
+        courseService.visitinsert(courseName);
 
 
         List<String> students = courseService.findStudentsByCourseName(courseName);

@@ -11,6 +11,25 @@ public class Course {
     private String name;
     private String  subject_url;
     private String image_url;
+
+    private int visits;
+
+    public int getVisits() {
+        return visits;
+    }
+
+    public void setVisits(int visits) {
+        this.visits = visits;
+    }
+
+    public Course(String id, String name, String subject_url, String image_url, int visits) {
+        this.id = id;
+        this.name = name;
+        this.subject_url = subject_url;
+        this.image_url = image_url;
+        this.visits = visits;
+    }
+
     public Course()
     {
 
@@ -32,12 +51,6 @@ public class Course {
     }
 
 
-    public Course(String id, String name, String subject_url, String image_url) {
-        this.id = id;
-        this.name = name;
-        this.subject_url = subject_url;
-        this.image_url = image_url;
-    }
 
     public String getId() {
         return id;

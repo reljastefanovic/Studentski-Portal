@@ -4,7 +4,9 @@ import StudetnskaPlatforma.Moodle.Entity.Course;
 
 import StudetnskaPlatforma.Moodle.Entity.Users;
 import jakarta.persistence.Id;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +20,8 @@ public interface courseRepository extends JpaRepository<Course, Integer> {
     Course findByName(String name);
     @Query(value = "SELECT u.username FROM users u JOIN user_courses uc ON u.username = uc.username JOIN courses c ON uc.course_id = c.id WHERE c.name = :courseName", nativeQuery = true)
     List<String> findStudentsByCourseName(@Param("courseName") String courseName);
+    @Modifying
+    @Transactional
+    @Query(value="UPDATE courses SET visits =visits+1 WHERE name = :coursename", nativeQuery=true)
+    void InsertVisits(@Param("coursename") String coursename);
 }

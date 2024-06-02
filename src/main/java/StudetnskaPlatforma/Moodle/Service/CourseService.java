@@ -52,5 +52,9 @@ public class CourseService {
     public List<String> findStudentsByCourseName(String courseName) {
         return repo.findStudentsByCourseName(courseName);
     }
+    public void visitinsert(String courseName) {
+
+        repo.InsertVisits(courseName);
+    }
 
 }

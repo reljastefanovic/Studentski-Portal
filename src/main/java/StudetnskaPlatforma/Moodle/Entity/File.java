@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "courses_data")
 public class File {
     @Id
+    @Column(name = "id")
+    private Long id ;
     @Column(name = "course_id")
     private Long course_id;
 
@@ -18,10 +20,16 @@ public class File {
     @Column(name = "file_data")
     private byte[] data;
 
-    public File(Long course_id, String fileName, byte[] data) {
+    public File(Long id, Long course_id, String fileName, String courseName, byte[] data) {
+        this.id = id;
         this.course_id = course_id;
         this.fileName = fileName;
+        this.courseName = courseName;
         this.data = data;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public File(Long course_id, String fileName, String courseName, byte[] data) {
@@ -39,9 +47,7 @@ public class File {
         this.courseName = courseName;
     }
 
-    public Long getId() {
-        return course_id;
-    }
+
 
     public String getFileName() {
         return fileName;
@@ -52,8 +58,18 @@ public class File {
         return data;
     }
 
-    public void setId(Long course_id) {
+
+
+    public Long getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(Long course_id) {
         this.course_id = course_id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public void setFileName(String fileName) {

@@ -59,12 +59,11 @@ public class CourseController {
 
 
 
-            List<String> students = courseService.findStudentsByCourseName(courseName);
-            model.addAttribute("students", students);
+        List<String> students = courseService.findStudentsByCourseName(courseName);
+        model.addAttribute("students", students);
 
 
-        // Retrieve all files
-        List<File> files = fileService.getAllFiles();
+        List<File> files = fileService.getCourseFiled(courseName);
         model.addAttribute("files", files);
 
 

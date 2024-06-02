@@ -139,7 +139,7 @@
     </div>
 
     <div class="row justify-content-around main">
-        <div class="col-2 border">
+        <div class="col-2 border" >
             <h2>Vaši upisani kursevi</h2>
             <li th:each="course : ${courses}">
                 <a th:href="@{/courses/{id}(id=${course.name})}" th:text="${course.name}"></a>
@@ -147,7 +147,7 @@
         </div>
 
         <div class="col-7 border">
-            <form method="POST" enctype="multipart/form-data" th:action="@{/upload}" sec:authorize="hasAuthority('ADMIN')">
+            <form method="POST" enctype="multipart/form-data" th:action="@{/upload/{courseName}(courseName=${courseName})}" sec:authorize="hasAuthority('ADMIN')">
                 <input type="file" name="file"/>
                 <button type="submit">Upload</button>
                 <input type="hidden" name="courseId" th:value="${course.id}" >
@@ -157,8 +157,7 @@
 
                 <ul th:each="file : ${files}" >
 
-
-                            <a th:href="@{'/file/' + ${file.id}}"   th:text=" ${file.fileName}"></a>
+                    <a th:href="@{'/file/' + ${file.id}}"   th:text=" ${file.fileName}"></a>
                 </ul>
 
             </div>

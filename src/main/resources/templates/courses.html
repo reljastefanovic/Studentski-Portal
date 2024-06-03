@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,47 +9,69 @@
 
     <style>
         .border{
-            border: solid 10px;
+              border: solid 10px;
+              border-radius: 10px;
+          }
+          .header{
+              margin-top: 2vh;
+          }
+          .main{
+              margin-top: 5vh;
+          }
+          .card-img-top {
+          height: 200px; /* Adjust the height as needed */
+          width: auto;
+          object-fit: cover; /* This ensures the image covers the entire area */
+      }
+           .card {
+          margin-bottom: 20px; /* Add spacing between cards */
+      }
+      body{
+      background-color:#f8f9fa;
+      font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+      }
+        a{
+        text-decoration:none;
+        color:#758efe;
+        font-size:20px;
         }
-        .header{
-            margin-top: 2vh;
+        a:hover{
+        color:#2f55ff;
         }
-        .main{
-            margin-top: 5vh;
-        }
-        .card-img-top {
-        height: 200px; /* Adjust the height as needed */
-        width: auto;
-        object-fit: cover; /* This ensures the image covers the entire area */
-    }
-         .card {
-        margin-bottom: 20px; /* Add spacing between cards */
-    }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg sticky-top" style="background-color:#343a40;"data-bs-theme="dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Moodle</a>
+        <a href="http://localhost:8080/">
+            <img src="https://lh4.googleusercontent.com/proxy/UMSbZC9WZptFpvl97lGGbbstr1H8jV-hQ0spyce5qZ9L_gBYisF0r0gPvQY5YTooBCbwl7CE7qV58Q" height="35px"    width="35px"></a>
+        <a class="navbar-brand" href="http://localhost:8080/">Moodle</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.html">Pocetna</a>
+                    <a class="nav-link " aria-current="page" href="http://localhost:8080/">Početna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Kursevi</a>
+                    <a class="nav-link active" href="http://localhost:8080/courses">Kursevi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8080/statistika" sec:authorize="hasAuthority('ADMIN')">Statistika</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link me-2" aria-current="page" href="login.html">Log in</a>
+                    <a class="nav-link me-2" aria-current="page" href="login" sec:authorize="!isAuthenticated()">Log in</a>
                 </li>
+                <form id="logoutForm" action="/logout" method="post">
+                    <button type="submit" class="nav-link me-2" aria-current="page" sec:authorize="isAuthenticated()" >Log Out</button>
+                </form>
+
                 <li class="nav-item">
-                    <a class="nav-link me-2" href="register.html">Sign in</a>
+                    <a class="nav-link me-2" href="register" sec:authorize="!isAuthenticated()">Sign in</a>
                 </li>
             </ul>
         </div>
@@ -56,18 +79,17 @@
 </nav>
 
 
-<div class="container header border">
-    <div class="container header border">
+<div class="container header " >
+    <div class="container header border" style="background-color:white;">
         <h1>Pregled Kurseva:</h1>
-        <div class="row justify-content-between main">
+        <div class="row justify-content-between main" >
             <div th:each="course, iterStat : ${courses}" class="col-4">
                 <div class="card">
                     <img th:src="${course.image_url}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">
+                        <h5 class="card-title" style="border-bottom: solid; border-bottom-width:1px; border-color:gray">
                             <a th:href="@{/courses/{id}(id=${course.name})}" th:text="${course.name}"></a>
                         </h5>
-
                         <form action="/enroll" method="post">
                             <div class="d-flex justify-content-between align-items-center">
                                 <a th:href="${course.subject_url}" class="card-text">

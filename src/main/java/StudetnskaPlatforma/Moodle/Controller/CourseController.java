@@ -3,6 +3,7 @@ package StudetnskaPlatforma.Moodle.Controller;
 import StudetnskaPlatforma.Moodle.Entity.Course;
 import StudetnskaPlatforma.Moodle.Entity.File;
 import StudetnskaPlatforma.Moodle.Entity.Users;
+import StudetnskaPlatforma.Moodle.Entity.Video;
 import StudetnskaPlatforma.Moodle.Service.CourseService;
 import StudetnskaPlatforma.Moodle.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,13 @@ public class CourseController {
         model.addAttribute("courses", courses);
         return "statistika"; // This will resolve to courses.html
     }
-    @PostMapping("/enroll")
-    public ResponseEntity<String> enrollUserToCourse(@RequestParam("courseId") Long courseId) {
+    @PostMapping("/enroll/{courseName}")
+    public String enrollUserToCourse(@RequestParam("courseId") Long courseId,@PathVariable("courseName") String courseName) {
         try {
             courseService.enrollUserToCourse(courseId);
-            return ResponseEntity.ok("User enrolled successfully!");
+            return "redirect:/courses/{courseName}";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not enroll user: " + e.getMessage());
+            return "redirect:/courses/{courseName}";
         }
     }
 
@@ -71,6 +72,9 @@ public class CourseController {
 
         List<File> files = fileService.getCourseFiled(courseName);
         model.addAttribute("files", files);
+
+        List<Video> videos = courseService.courseVideos(courseName);
+        model.addAttribute("videos",videos);
 
 
         return "testorino";

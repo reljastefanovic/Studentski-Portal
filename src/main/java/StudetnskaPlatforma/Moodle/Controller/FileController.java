@@ -23,16 +23,15 @@ public class FileController {
 
     @Autowired
     private FileService fileService;
-    @Autowired
-    private fileRepository fileRepository;
+
 
     @PostMapping("/upload/{courseName}")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("courseId") Long courseId,@PathVariable String courseName) {
+    public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("courseId") Long courseId,@PathVariable String courseName) {
         try {
             File fileEntity = fileService.storeFile(file,courseId,courseName);
-            return ResponseEntity.status(HttpStatus.OK).body("File uploaded successfully: " + fileEntity.getFileName());
+            return "redirect:/courses/{courseName}";
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
+            return "GreŠka";
         }
     }
     @GetMapping("/file/{id}")
@@ -42,6 +41,11 @@ public class FileController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileEntity.getFileName() + "\"")
                 .body(fileEntity.getData());
+    }
+    @PostMapping("/deletefile/{courseName}")
+    public String deleteFile(@RequestParam("id") Long id,@PathVariable("courseName") String courseName) {
+        fileService.deleteFile(id);
+        return "redirect:/courses/{courseName}";
     }
 
 

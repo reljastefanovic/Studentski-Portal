@@ -20,4 +20,8 @@ public interface fileRepository extends JpaRepository<File, Long> {
     void Get(@Param("fileName") String fileName, @Param("data") byte[] data, @Param("courseId") Long courseId);
     @Query(value="SELECT * FROM courses_data WHERE course_name=:course_name", nativeQuery= true)
     List<File> coursefiles(@Param("course_name") String course_name);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM courses_data WHERE id=?1", nativeQuery = true)
+    void deleteFile(Long id);
 }

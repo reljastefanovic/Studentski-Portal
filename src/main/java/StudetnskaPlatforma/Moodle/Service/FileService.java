@@ -34,4 +34,7 @@ public class FileService {
     public List<File> getCourseFiled(String courseName) {
         return fileRepository.coursefiles(courseName);
     }
+    public void deleteFile(Long id) {
+        fileRepository.deleteFile(id);
+    }
 }

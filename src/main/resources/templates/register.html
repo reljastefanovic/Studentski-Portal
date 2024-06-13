@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - login/signup form animation</title>
+    <title>Register</title>
     <style>
         /* Paste your CSS styles here */
         @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
@@ -276,30 +276,30 @@ margin:auto;
 <!-- Paste your HTML structure here -->
 <div class="form-structor">
     <div class="signup">
-        <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+        <h2 class="form-title" id="signup"><span>or</span>Registracija</h2>
         <form th:action="@{/register}" method="post">
             <div class="error-message" th:if="${param.error}">
                 <p style="color:white; text-align:center;  "> <b><i> Došlo je do greške prilikom registracije. Vaš username već postoji</i> </b></p>
             </div>
             <div class="form-holder">
-                <input type="text" class="input" placeholder="username" name="username"/>
-                <input type="password" class="input" placeholder="password" name="password"/>
+                <input type="text" class="input" placeholder="Korisničko ime" name="username"/>
+                <input type="password" class="input" placeholder="Šifra" name="password"/>
                 <input type="email" class="input" placeholder="email" name="email" />
             </div>
-            <button class="submit-btn">Sign up</button>
+            <button class="submit-btn">Registruj se</button>
         </form>
         <!-- Dodajte ovde div za prikazivanje poruke o grešci -->
 
     </div>
     <div class="login slide-up">
         <div class="center">
-            <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+            <h2 class="form-title" id="login"><span>or</span>Prijava</h2>
             <form th:action="@{/login}" method="post">
                 <div class="form-holder">
-                    <input type="text" class="input" placeholder="Username" name="username" />
-                    <input type="password" class="input" placeholder="Password" name="password" />
+                    <input type="text" class="input" placeholder="Korisničko ime" name="username" />
+                    <input type="password" class="input" placeholder="Šifra" name="password" />
                 </div>
-                <button type="submit" class="submit-btn">Log in</button>
+                <button type="submit" class="submit-btn">Prijavi se</button>
             </form>
         </div>
     </div>

@@ -4,6 +4,7 @@ import StudetnskaPlatforma.Moodle.Entity.Course;
 import StudetnskaPlatforma.Moodle.Entity.Posts;
 import StudetnskaPlatforma.Moodle.Repository.postsRepository;
 import StudetnskaPlatforma.Moodle.Service.CourseService;
+import StudetnskaPlatforma.Moodle.Service.LoggedInUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,15 @@ public class PostsController {
     postsRepository repo;
     @Autowired
     CourseService courseService;
+    @Autowired
+    LoggedInUserService loggedInUserService;
 
     @GetMapping("/")
     public String getposts(Model model) {
         List<Posts> posts = repo.findLastFourPosts();
         model.addAttribute("posts", posts);
-
+        List<String> loggedInUsers = loggedInUserService.getAllLoggedInUsers();
+        model.addAttribute("loggedInUsers", loggedInUsers);
 
         List<Course> courses = courseService.getCourseNamesForLoggedInUser();
         model.addAttribute("courses", courses);

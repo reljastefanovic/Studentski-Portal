@@ -28,12 +28,6 @@ public class CourseController {
     @Autowired
     private FileService fileService;
 
-    @GetMapping("/courses")
-    public String getAllCourses(Model model) {
-        List<Course> courses = courseService.getAllCourses();
-        model.addAttribute("courses", courses);
-        return "courses"; // This will resolve to courses.html
-    }
     @GetMapping("/statistika")
     public String Statistika(Model model) {
         List<Course> courses = courseService.getAllCourses();
@@ -48,6 +42,18 @@ public class CourseController {
         } catch (Exception e) {
             return "redirect:/courses/{courseName}";
         }
+    }
+    @GetMapping("/courses")
+    public String getAllCourses(Model model) {
+        List<Course> courses = courseService.getAllCourses();
+        model.addAttribute("courses", courses);
+        return "courses"; // This will resolve to courses.html
+    }
+    @PostMapping("/leave/{id}")
+    public String leave(@PathVariable("id") Long courseId) {
+            courseService.leaveCourse(courseId);
+            return "redirect:/";
+
     }
 
 

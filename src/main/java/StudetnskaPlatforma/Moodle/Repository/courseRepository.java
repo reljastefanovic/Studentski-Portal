@@ -24,4 +24,5 @@ public interface courseRepository extends JpaRepository<Course, Integer> {
     @Transactional
     @Query(value="UPDATE courses SET visits =visits+1 WHERE name = :coursename", nativeQuery=true)
     void InsertVisits(@Param("coursename") String coursename);
+
 }

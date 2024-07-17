@@ -47,6 +47,10 @@ public class CourseService {
         String username = getUsername();
         enrolledRepository.enrollUserToCourse(username, courseId); // Prosleđivanje korisničkog imena i ID kursa
     }
+    public void leaveCourse(Long courseId) {
+        String username = getUsername();
+        enrolledRepository.leaveCourse(courseId,username);
+    }
 
 
 

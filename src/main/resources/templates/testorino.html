@@ -146,7 +146,7 @@ color:#2f55ff;
 
 <nav class="navbar navbar-expand-lg sticky-top" style="background-color:#343a40;"data-bs-theme="dark">
     <div class="container" >
-        <a href="http://localhost:8080/">
+        <a href="https://diplomski-diplom.azuremicroservices.io/">
             <img src="https://lh4.googleusercontent.com/proxy/UMSbZC9WZptFpvl97lGGbbstr1H8jV-hQ0spyce5qZ9L_gBYisF0r0gPvQY5YTooBCbwl7CE7qV58Q" height="35px"    width="35px"></a>
         <a class="navbar-brand" href="http://localhost:8080/">Moodle</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,13 +155,13 @@ color:#2f55ff;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="http://localhost:8080/">Početna</a>
+                    <a class="nav-link " aria-current="page" href="https://diplomski-diplom.azuremicroservices.io">Početna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/courses">Kursevi</a>
+                    <a class="nav-link active" href="https://diplomski-diplom.azuremicroservices.io/courses">Kursevi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/statistika" sec:authorize="hasAuthority('ADMIN')">Statistika</a>
+                    <a class="nav-link" href="https://diplomski-diplom.azuremicroservices.io/statistika" sec:authorize="hasAuthority('ADMIN')">Statistika</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
@@ -182,10 +182,17 @@ color:#2f55ff;
 
 <div class="container-fluid header " style="background-color: #f8f9fa">
     <div class="row  justify-content-center ">
-        <div class="border" style="background-color: white">
-            <h1 th:text="${course.name}"></h1>
-            <p>Katedra za Informacione Tehnologije </p>
+        <div class="border d-flex justify-content-between align-items-start" style="background-color: white; padding: 10px;">
+            <div>
+                <h1 th:text="${course.name}"></h1>
+                <p>Katedra za Informacione Tehnologije </p>
+            </div>
+            <form method="POST" th:action="@{/leave/{id}(id=${course.id})}" class="ms-auto">
+                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-danger">Ispiši se sa kursa</button>
+            </form>
         </div>
+
+
     </div>
 
     <div class="row justify-content-around main" >
@@ -206,14 +213,11 @@ color:#2f55ff;
                     </button>
                 </div>
 
-                <!-- Modal prozor za upload fajla -->
                 <div class="modal fade" id="uploadFileModal" tabindex="-1" aria-labelledby="uploadFileModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 
-                            <!-- Modal Body -->
                             <div class="modal-body">
-                                <!-- Forma za unos fajla -->
                                 <form method="POST" enctype="multipart/form-data"
                                       th:action="@{/upload/{courseName}(courseName=${courseName})}" sec:authorize="hasAuthority('ADMIN')">
                                     <div class="mb-3">
@@ -229,7 +233,6 @@ color:#2f55ff;
                     </div>
                 </div>
 
-                <!-- Forma za brisanje fajla -->
                 <form method="POST" th:action="@{/deletefile/{courseName}(courseName=${courseName})}">
                     <ul th:each="file : ${files}">
                         <li class="file">

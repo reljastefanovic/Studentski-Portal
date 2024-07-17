@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,4 +40,17 @@ public class PostsController {
                               @RequestParam("url") String url) {
         repo.savePost(title,tekst,url);
         return "redirect:";}
+    @PostMapping("/edit/{postid}")
+    public String editpost(  @PathVariable int postid,
+                             @RequestParam("title") String title,
+                             @RequestParam("tekst") String tekst,
+                             @RequestParam("url") String url) {
+        repo.editPost(title,tekst,url,postid);
+        return "redirect:/";
+    }
+    @PostMapping("/deletepost/{postid}")
+    public String deletepost(@PathVariable int postid)
+    { repo.deletePost(postid);
+        return "redirect:/";
+    }
 }

@@ -38,11 +38,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class Configurations {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth->auth
-                        .requestMatchers("/","/user/save","/register","register2").permitAll()
+        http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/user/save", "/register", "/post").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/webjars/**").permitAll() // Allow access to static resources
                         .requestMatchers("/post").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
-                        )
+                )
                 .httpBasic(withDefaults())
                 .formLogin(form -> form
                         .loginPage("/login")

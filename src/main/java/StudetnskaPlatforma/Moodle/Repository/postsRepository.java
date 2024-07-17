@@ -18,4 +18,12 @@ public interface postsRepository extends JpaRepository<Posts,String> {
     @Modifying
     @Query(value = "INSERT INTO posts (title, tekst, url) VALUES (?1, ?2, ?3)", nativeQuery = true)
     void savePost(String title, String tekst, String url);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE posts set title=?1, tekst=?2, url=?3 WHERE id=?4", nativeQuery = true)
+    void editPost(String title, String tekst, String url,int id);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM posts WHERE id=?1", nativeQuery = true)
+    void deletePost(int id);
 }
